@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://whereready.com"),
   title: "WhereReady - Where Growth Gets Ready",
   description: "IT services for startups and small businesses. Websites, Custom Software, and Business Automation.",
   icons: {
