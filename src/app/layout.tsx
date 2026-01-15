@@ -20,7 +20,10 @@ export const metadata: Metadata = {
   description: "IT services for startups and small businesses. Websites, Custom Software, and Business Automation.",
   icons: {
     icon: "/favicon-v2.png",
+    shortcut: "/favicon-v2.png",
+    apple: "/favicon-v2.png",
   },
+  manifest: "/manifest.json", // Good practice to add later, but harmless placeholder
 };
 
 import { GoogleAnalytics } from "@next/third-parties/google";
