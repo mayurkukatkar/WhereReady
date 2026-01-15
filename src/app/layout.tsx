@@ -17,6 +17,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "WhereReady - Where Growth Gets Ready",
   description: "IT services for startups and small businesses. Websites, Custom Software, and Business Automation.",
+  icons: {
+    icon: "/icon.png",
+  },
 };
 
 import { GoogleAnalytics } from "@next/third-parties/google";
