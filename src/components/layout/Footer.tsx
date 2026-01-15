@@ -46,11 +46,15 @@ export function Footer() {
                         <ul className="space-y-3 text-sm text-neutral-600">
                             <li className="flex items-center gap-2">
                                 <Mail className="w-4 h-4 text-accent" />
-                                <a href="mailto:info@whereready.com" className="hover:text-accent">info@whereready.com</a>
+                                <a href={`mailto:${process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@whereready.com"}`} className="hover:text-accent">
+                                    {process.env.NEXT_PUBLIC_CONTACT_EMAIL || "info@whereready.com"}
+                                </a>
                             </li>
                             <li className="flex items-center gap-2">
                                 <Phone className="w-4 h-4 text-accent" />
-                                <a href="tel:+919970601883" className="hover:text-accent">+91 99706 01883</a>
+                                <a href={`tel:+${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919270201883"}`} className="hover:text-accent">
+                                    +{process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ? `${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.slice(0, 2)} ${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.slice(2, 7)} ${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER.slice(7)}` : "91 92702 01883"}
+                                </a>
                             </li>
                         </ul>
                     </div>

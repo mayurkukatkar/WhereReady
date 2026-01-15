@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { Check, Sparkles } from "lucide-react";
+import { useConsultation } from "@/context/ConsultationContext";
 
 const plans = [
     {
@@ -53,6 +54,7 @@ const plans = [
 ];
 
 export function Packages() {
+    const { openModal } = useConsultation();
     return (
         <section className="py-24 bg-neutral-50" id="services">
             <Container>
@@ -111,6 +113,7 @@ export function Packages() {
                                 className="w-full"
                                 size="lg"
                                 variant={plan.highlight ? "primary" : "outline"}
+                                onClick={openModal}
                             >
                                 Get Started
                             </Button>

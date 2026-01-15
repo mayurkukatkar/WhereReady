@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
+import { useConsultation } from "@/context/ConsultationContext";
 
 const navigation = [
     { name: "Home", href: "/" },
@@ -18,6 +19,7 @@ const navigation = [
 ];
 
 export function Header() {
+    const { openModal } = useConsultation();
     const [isOpen, setIsOpen] = React.useState(false);
     const [isScrolled, setIsScrolled] = React.useState(false);
 
@@ -64,7 +66,7 @@ export function Header() {
 
                 {/* Desktop CTA */}
                 <div className="hidden md:block">
-                    <Button size="sm" variant="primary">
+                    <Button size="sm" variant="primary" onClick={openModal}>
                         Get Free Consultation
                     </Button>
                 </div>
@@ -99,7 +101,7 @@ export function Header() {
                                     {item.name}
                                 </Link>
                             ))}
-                            <Button className="w-full mt-4" size="lg">
+                            <Button className="w-full mt-4" size="lg" onClick={openModal}>
                                 Get Free Consultation
                             </Button>
                         </Container>

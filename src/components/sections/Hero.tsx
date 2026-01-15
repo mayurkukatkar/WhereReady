@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { useConsultation } from "@/context/ConsultationContext";
 
 export function Hero() {
+    const { openModal } = useConsultation();
     return (
         <section className="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden isolate">
             {/* Background Video - z-0 (Base layer of the section) */}
@@ -45,7 +47,7 @@ export function Hero() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button size="lg" variant="primary" icon>
+                        <Button size="lg" variant="primary" icon onClick={openModal}>
                             Get Free Consultation
                         </Button>
                         <Button size="lg" variant="secondary">

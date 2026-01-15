@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { useConsultation } from "@/context/ConsultationContext";
 
 export function FinalDream() {
+    const { openModal } = useConsultation();
     return (
         <section className="py-24 md:py-32 bg-neutral-900 text-white overflow-hidden relative">
             {/* Abstract background elements */}
@@ -32,7 +34,7 @@ export function FinalDream() {
                     </p>
 
                     <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-                        <Button size="lg" variant="primary" className="min-w-[200px] text-lg hover:scale-105 transition-transform shadow-xl shadow-accent/20">
+                        <Button size="lg" variant="primary" className="min-w-[200px] text-lg hover:scale-105 transition-transform shadow-xl shadow-accent/20" onClick={openModal}>
                             Get Your Free Strategy Call
                         </Button>
                         <Button size="lg" variant="outline" className="min-w-[200px] text-lg text-white border-neutral-700 hover:bg-white/5 hover:border-white transition-colors">
