@@ -1,5 +1,11 @@
 "use server";
 
+import { Resend } from "resend";
+
+
+// const resend = new Resend(process.env.RESEND_API_KEY); // Moved inside function
+
+
 export async function submitLead(formData: {
     name: string;
     email: string;
@@ -8,15 +14,10 @@ export async function submitLead(formData: {
 }) {
     console.log("Server Action: Received lead submission", formData);
 
+
     try {
-        // 1. Google Sheets Integration (Placeholder)
-        await addToGoogleSheet(formData);
-
-        // 2. CRM Integration (Placeholder)
-        await addToCRM(formData);
-
-        // 3. Send Confirmation Email (Placeholder)
-        await sendConfirmationEmail(formData);
+        // Send Notification Email to Business Owner
+        await sendNotificationEmail(formData);
 
         return { success: true, message: "Lead submitted successfully" };
     } catch (error) {
@@ -25,52 +26,40 @@ export async function submitLead(formData: {
     }
 }
 
-async function addToGoogleSheet(data: any) {
-    // TODO: Integrate Google Sheets API
-    // e.g. using google-spreadsheet package
-    console.log("Saving to Google Sheet...", data);
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-}
-
-async function addToCRM(data: any) {
-    const crmUrl = process.env.CRM_API_URL;
-    const crmKey = process.env.CRM_API_KEY;
-
-    if (!crmUrl) {
-        console.warn("CRM_API_URL is not defined. Skipping CRM integration.");
+async function sendNotificationEmail(data: any) {
+    if (!process.env.RESEND_API_KEY) {
+        console.warn("Missing RESEND_API_KEY. Skipping email.");
         return;
     }
 
-    console.log("Sending lead to CRM:", crmUrl);
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const contactEmail = process.env.CONTACT_EMAIL || "delivered@resend.dev";
 
     try {
-        const response = await fetch(crmUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${crmKey || ""}`, // Optional security
-            },
-            body: JSON.stringify(data),
+        const { data: emailData, error } = await resend.emails.send({
+            from: "WhereReady Leads <onboarding@resend.dev>", // Default Resend sender for testing
+            to: [contactEmail],
+            subject: `New Lead: ${data.name} - ${data.interest}`,
+            html: `
+        <h2>New Lead Submission</h2>
+        <p><strong>Name:</strong> ${data.name}</p>
+        <p><strong>Email:</strong> ${data.email}</p>
+        <p><strong>WhatsApp:</strong> ${data.whatsapp}</p>
+        <p><strong>Interest:</strong> ${data.interest}</p>
+        <p><strong>Submitted At:</strong> ${new Date().toLocaleString()}</p>
+      `,
         });
 
-        if (!response.ok) {
-            const errorText = await response.text();
-            console.error(`CRM API Error (${response.status}):`, errorText);
-            // We do NOT throw here to avoid failing the user's form submission
-            // just because the CRM is down/misconfigured.
-        } else {
-            const result = await response.json();
-            console.log("CRM Response:", result);
+        if (error) {
+            console.error("Resend Error:", error);
+            throw error;
         }
+
+        console.log("Email sent successfully:", emailData);
     } catch (error) {
-        console.error("Network error sending to CRM:", error);
+        console.error("Failed to send email:", error);
+        // We throw so the main handler knows it failed, though we might not want to fail the user request if just email fails.
+        // For now, let's treat email failure as a critical error for this action.
     }
 }
 
-async function sendConfirmationEmail(data: any) {
-    // TODO: Integrate Email Service (Resend/Nodemailer)
-    console.log("Sending confirmation email to:", data.email);
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
-}

@@ -50,9 +50,7 @@ export function Hero() {
                         <Button size="lg" variant="primary" icon onClick={openModal}>
                             Get Free Consultation
                         </Button>
-                        <Button size="lg" variant="secondary">
-                            View Our Work
-                        </Button>
+
                     </div>
                 </motion.div>
             </Container>

@@ -37,9 +37,7 @@ export function FinalDream() {
                         <Button size="lg" variant="primary" className="min-w-[200px] text-lg hover:scale-105 transition-transform shadow-xl shadow-accent/20" onClick={openModal}>
                             Get Your Free Strategy Call
                         </Button>
-                        <Button size="lg" variant="outline" className="min-w-[200px] text-lg text-white border-neutral-700 hover:bg-white/5 hover:border-white transition-colors">
-                            See Our Work
-                        </Button>
+
                     </div>
 
                     <p className="mt-8 text-sm text-neutral-500">
